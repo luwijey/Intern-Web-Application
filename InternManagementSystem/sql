@@ -1,0 +1,43 @@
+CREATE DATABASE ojt_db; 
+USE ojt_db;
+
+CREATE TABLE users(
+    id int AUTO_INCREMENT PRIMARY KEY,
+    gmail VARCHAR(255) NOT NULL,
+    name VARCHAR (255) NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    otp VARCHAR(6), 
+    otp_expiry DATETIME
+);
+
+
+CREATE TABLE interns (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    fname VARCHAR(100) NOT NULL,
+    lname VARCHAR(100) NOT NULL,
+    gmail VARCHAR(255) NOT NULL UNIQUE,
+    phone_no VARCHAR(20) NOT NULL,
+    department VARCHAR(100),
+    school VARCHAR(255),
+    date_started DATE,
+    required_hours INT,
+    resume VARCHAR(255) DEFAULT NULL, -- Path to stored resume
+    face_descriptor TEXT NOT NULL -- JSON face descriptor
+);
+
+
+CREATE TABLE attendance (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    intern_id INT NOT NULL,
+    name VARCHAR(255) NOT NULL,  -- Intern's full name
+    department VARCHAR(255) NOT NULL, -- Intern's department
+    time_in VARCHAR(10),  -- Stores time-in in hh:mm AM/PM format
+    time_out VARCHAR(10), -- Stores time-out in hh:mm AM/PM format
+    formatted_date VARCHAR(10) NOT NULL, -- Stores date in MM/DD/YYYY format
+    timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    hours_completed decimal NULL,
+    FOREIGN KEY (intern_id) REFERENCES interns(id)
+);
+
+
+
